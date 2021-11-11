@@ -41,10 +41,15 @@ jobs:
           poetry build -v
           python -m pip install dist/*.whl
 
+      - name: Create temporary working directory to run tests
+        run: mkdir -p temp_working_directory
+
       - name: Run tests
-        run: python -m pytest -s -v tests
+        working-directory: temp_working_directory
+        run: python -m pytest -s -v ../tests
 
       - name: Test PyStan compatibility
+        working-directory: temp_working_directory
         run: |
           pip install --pre pystan
           python -c'import stan;assert stan.build("parameters {real y;} model {y ~ normal(0,1);}").sample()["y"] is not None'
