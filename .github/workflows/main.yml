@@ -31,9 +31,6 @@ jobs:
       - name: Install poetry
         run: pip install "poetry~=1.2"
 
-      - name: Build libraries used by Stan
-        run: make -j2
-
       # export test dependencies from pyproject.toml, install them
       - name: Install dependencies
         run: |
